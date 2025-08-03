@@ -45,7 +45,7 @@ export async function XHRLoader(
     }
     xhr.send(method === "POST" ? payload : undefined);
 
-    return new Promise<IXHRLoaderResponse>((resolve) => {
+    return new Promise<IXHRLoaderResponse>((resolve, reject) => {
         xhr.onerror = (ev) => {
             resolve({
                 state: ResponseState.FAILED,
@@ -63,9 +63,17 @@ export async function XHRLoader(
                 state = ResponseState.SUCCESS;
             }
 
+            let data = null;
+            try {
+                data = JSON.parse(result);
+            } catch (e) {
+                reject(e);
+                return;
+            }
+
             resolve({
                 state: state,
-                data: JSON.parse(result),
+                data,
                 valid: true,
                 message: [`status: ${xhr.status}`, `readyStatus: ${xhr.readyState}`],
             });

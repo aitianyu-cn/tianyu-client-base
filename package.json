@@ -1,6 +1,6 @@
 {
     "name": "@aitianyu.cn/client-base",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "private": false,
     "description": "Basic components for aitianyu nodejs client",
     "main": "./dist/lib/index.js",
